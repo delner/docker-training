@@ -99,7 +99,7 @@ To run containers, we'll first need to pull some images.
     Alternatively, you can delete images by tag or by a partial image ID. In the previous example, the following would have been equivalent:
 
      - `docker rmi 31`
-     - `docker rmi ubuntu:16.04`
+     - `docker rmi ubuntu:16.10`
 
     Running `docker images` should reflect the deleted image.
 
@@ -232,6 +232,8 @@ The command can be anything you want, as long as it exists on the image. In the 
 
     We can see that it exited with code `137`, which in Linux world means the command was likely aborted with a `kill -9` command.
 
+### Removing containers
+
 5. After working with Docker containers, you might want to delete old, obsolete ones.
 
     ```
@@ -252,9 +254,7 @@ The command can be anything you want, as long as it exists on the image. In the 
 
     A nice shortcut for removing all containers from your system is `docker rm $(docker ps -a -q)`
 
-    It can be tedious to remove old containers each time after you run them.
-
-    Docker also allows you to specify the `--rm` flag to the `docker run` command, which will remove the container after it exits.
+    It can be tedious to remove old containers each time after you run them. To address this, Docker also allows you to specify the `--rm` flag to the `docker run` command, which will remove the container after it exits.
 
     ```
     $ docker run --rm ubuntu:16.04 /bin/echo 'Hello and goodbye!'
