@@ -231,7 +231,7 @@ The Docker way is to create a new image. There are two ways to do this: 1) build
 3. Finally run your new image in a new container to see it in action!
 
     ```
-    $ docker run -it delner/ping /bin/bash
+    $ docker run -it --rm delner/ping /bin/bash
     root@3ab21a456c9f:/# ping google.com
     PING google.com (172.217.4.206) 56(84) bytes of data.
     64 bytes from lga15s48-in-f14.1e100.net (172.217.4.206): icmp_seq=1 ttl=37 time=1.12 ms
