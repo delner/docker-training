@@ -193,10 +193,10 @@ The command can be anything you want, as long as it exists on the image. In the 
 
     By adding the `-d` flag, we can run in detached mode, meaning the container will continue to run as long as the command is, but it won't print the output.
 
-    Let's run `/bin/sleep 600`, which will run the container idly for 10 minutes:
+    Let's run `/bin/sleep 3600`, which will run the container idly for 1 hour:
 
     ```
-    $ docker run -d ubuntu:16.04 /bin/sleep 600
+    $ docker run -d ubuntu:16.04 /bin/sleep 3600
     be730b8c554b69383f30f71222b9ac264367c7454790dc2a4eb0cda33c0baa2a
     $
     ```
@@ -206,11 +206,52 @@ The command can be anything you want, as long as it exists on the image. In the 
     ```
     $ docker ps
     CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
-    be730b8c554b        ubuntu:16.04        "/bin/sleep 600"    41 seconds ago      Up 40 seconds                           jovial_goldstine
+    be730b8c554b        ubuntu:16.04        "/bin/sleep 3600"    41 seconds ago      Up 40 seconds                           jovial_goldstine
     $
     ```
-    
-    Instead of waiting 10 minutes for this command to stop (and the container exit), what if we'd like to stop the Docker container now?
+
+5. Now that the container is running in the background, what if we want to reattach to it?
+
+    Conceivably, if this were something like a web server or other process where we might like to inspect logs while it runs, it'd be useful to run something on the container without interrupting the current process.
+
+    To this end, there is another command, called `docker exec`. `docker exec` runs a command within a container that is already running. It works exactly like `docker run`, except instead of taking an image ID, it takes a container ID.
+
+    This makes the `docker exec` command useful for tailing logs, or "SSHing" into an active container.
+
+    Let's do that now, running the following, passing the first few characters of the container ID:
+
+    ```
+    $ docker exec -it be7 /bin/bash
+    root@be730b8c554b:/#
+    ```
+
+    The container ID appearing at the front of the BASH prompt tells us we're inside the container. Once inside a session, we can interact with the container like any SSH session.
+
+    Let's list the running processes:
+
+    ```
+    root@be730b8c554b:/# ps aux
+    USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+    root         1  0.2  0.0   4380   796 ?        Ss   15:41   0:00 /bin/sleep 3600
+    root         6  0.6  0.1  18240  3208 ?        Ss   15:41   0:00 /bin/bash
+    root        16  0.0  0.1  34424  2808 ?        R+   15:41   0:00 ps aux
+    root@be730b8c554b:/#
+    ```
+
+    There we can see our running `/bin/sleep 3600` command. Whenever we're done, we can type `exit` to exit our current BASH session, and leave the container running.
+
+    ```
+    root@be730b8c554b:/# exit
+    exit
+    $ docker ps
+    CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+    be730b8c554b        ubuntu:16.04        "/bin/sleep 3600"   9 minutes ago       Up 9 minutes                            jovial_goldstine
+    $
+    ```
+
+    And finally checking `docker ps`, we can see the container is still running.
+
+6. Instead of waiting 1 hour for this command to stop (and the container exit), what if we'd like to stop the Docker container now?
 
     To that end, we have the `docker stop` and the `docker kill` commands. The prior is a graceful stop, whereas the latter is a forceful one.
 
@@ -234,7 +275,7 @@ The command can be anything you want, as long as it exists on the image. In the 
 
 ### Removing containers
 
-5. After working with Docker containers, you might want to delete old, obsolete ones.
+7. After working with Docker containers, you might want to delete old, obsolete ones.
 
     ```
     $ docker ps -a
@@ -263,3 +304,5 @@ The command can be anything you want, as long as it exists on the image. In the 
     CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
     $
     ```
+
+# END OF EXERCISE 1
