@@ -260,7 +260,7 @@ The `-p` flag given `<host port>:<container port>` does this mapping, making the
 You can then run `psql` (if the utility is installed) on your host machine to access the Postgres database 
 
 ```
-$ psql -U postgres
+$ psql -U postgres -h localhost
 psql (9.6.2)
 Type "help" for help.
 
