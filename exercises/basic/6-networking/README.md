@@ -178,7 +178,7 @@ $ docker run --rm -d --network skynet --name dummy delner/ping:1.0
 Then the pinger, targeting the dummy `ping` container:
 
 ```
-$ docker run --rm -d -e PING_TARGET=dummy --name pinger delner/ping:1.0
+$ docker run --rm -d --network skynet -e PING_TARGET=dummy --name pinger delner/ping:1.0
 28e68fed9fe28a4346951fa8b6f4147a16f2afec8671357f1ed5f27425914b0a
 $ docker logs pinger
 PING dummy (172.26.0.2) 56(84) bytes of data.
