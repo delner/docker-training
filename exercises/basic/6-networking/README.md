@@ -201,9 +201,9 @@ Let's setup two `postgres` databases to connect to one another: a `widget` datab
 Start each of the databases and add them to the network:
 
 ```
-$ docker run --rm -d --name widgetdb --network skynet -p 5432 postgres
+$ docker run --rm -d -e POSTGRES_PASSWORD=mysecretpassword --name widgetdb --network skynet -p 5432 postgres
 7f0248e3c0f4f03159ef966fd9767a4c7e3412801f8b0445cebb933d1e84e020
-$ docker run --rm -d --name gadgetdb --network skynet -p 5432 postgres
+$ docker run --rm -d -e POSTGRES_PASSWORD=mysecretpassword --name gadgetdb --network skynet -p 5432 postgres
 8dc66701837c695728abb9046db71924112a9b8f2f1e096094ab5b5d631e2f73
 $ docker ps
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                     NAMES
